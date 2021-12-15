@@ -30,7 +30,6 @@ const MemoryGame = (): React.Node => {
       display: 'flex',
     },
     listItem: {
-      borderRadius: '5%',
       transition: 'transform 0.6s',
       transformStyle: 'preserve-3d',
       cursor: 'pointer',
