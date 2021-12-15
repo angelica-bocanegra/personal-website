@@ -19,13 +19,42 @@ const MemoryGame = (): React.Node => {
   const [success, setSuccess] = React.useState();
 
   const styles = {
-    image: {
+    imageContainer: {
+      mx: 'auto',
+      my: 0,
+      p: '40px 40px 4px',
+      maxWidth: '640px',
+      backgroundColor: '#D0AD96',
+    },
+    wave: {
+      display: 'flex',
+    },
+    listItem: {
+      borderRadius: '5%',
+      transition: 'transform 0.6s',
+      transformStyle: 'preserve-3d',
+      cursor: 'pointer',
+      display: 'relative',
+    },
+    cardBack: {
       padding: '1px',
       backfaceVisibility: 'hidden',
-      backgroundColor: '#A5A58D',
+      backgroundColor: '#A06740',
       borderRadius: '5%',
-      boxShadow: '#2b2d25 0px 8px 14px',
+      boxShadow: '#20221C 0px 2px 4px 0px',
       textAlign: 'center',
+    },
+    cardFront: {
+      padding: '1px',
+      backfaceVisibility: 'hidden',
+      backgroundColor: '#676751',
+      borderRadius: '5%',
+      boxShadow: '#20221C 0px 2px 4px 0px',
+      textAlign: 'center',
+      transform: 'rotateY(180deg)',
+      position: 'absolute',
+      top: '0px',
+      left: '-2px',
     },
   };
 
@@ -37,13 +66,13 @@ const MemoryGame = (): React.Node => {
       } else {
         setTimeout(() => {
           setCardSelection([]);
-        }, 2000);
+        }, 1500);
       }
     }
   }, [cardSelection]);
 
   React.useEffect(() => {
-    const imageData = [
+    const cardData = [
       {
         alt: 'gitHub',
         title: 'GitHub',
@@ -55,10 +84,10 @@ const MemoryGame = (): React.Node => {
       {
         alt: 'email',
         title: 'Contact Me',
-        body: 'Feel free to send me and email if you want to reach out',
+        body: 'Feel free to contact me and send email if you want to reach out',
         testid: 'email',
         src: emailImg,
-        link: 'mailto:angelicab.contact@gmail.com',
+        link: 'angelicab.contact@gmail.com',
       },
       {
         alt: 'LinkedIn',
@@ -71,14 +100,14 @@ const MemoryGame = (): React.Node => {
     ];
 
     let t = [];
-    imageData.forEach((i) => {
+    cardData.forEach((i) => {
       t = [...t, {
         ...i,
         testid: `${i.testid}-1`,
       }];
     });
 
-    setImages([...imageData, ...t].sort(() => 0.5 - Math.random()));
+    setImages([...cardData, ...t].sort(() => 0.5 - Math.random()));
   }, []);
 
   const handleClose = () => {
@@ -89,66 +118,42 @@ const MemoryGame = (): React.Node => {
   return (
     <Box
       data-testid="memory-game-wrapper"
-      sx={{
-        backgroundColor: '#6b705c',
-      }}
     >
-      <ImageList
-        gap={8}
-        cols={3}
-        sx={{
-          m: 'auto',
-          padding: '24px',
-          maxWidth: '640px',
-          backgroundColor: '#6b705c',
-        }}
-      >
-        {images.map((item) => (
-          <ImageListItem
-            key={item.testid}
-            onClick={() => (
-              cardSelection.length < 2 && !cardSelection.includes(item)
-                ? setCardSelection([...cardSelection, item])
-                : undefined)}
-            style={{
-              ...(cardSelection.includes(item)
-                ? {
-                  transform: 'rotateY(180deg)',
-                }
-                : {
-                  transform: 'rotateY(0deg)',
-                }
-              ),
-              borderRadius: '5%',
-              transition: 'transform 0.6s',
-              transformStyle: 'preserve-3d',
-              cursor: 'pointer',
-              display: 'relative',
-            }}
-          >
-            <img
-              data-testid={`${item.testid}-card-back`}
-              src={cardBack}
-              alt={item.alt}
+      <Box sx={{ backgroundColor: '#D0AD96' }}>
+        <ImageList
+          gap={8}
+          cols={3}
+          sx={styles.imageContainer}
+        >
+          {images.map((item) => (
+            <ImageListItem
+              key={item.testid}
+              onClick={() => (
+                cardSelection.length < 2 && !cardSelection.includes(item)
+                  ? setCardSelection([...cardSelection, item])
+                  : undefined)}
               style={{
-                ...styles.image,
+                transform: cardSelection.includes(item) ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                ...styles.listItem,
               }}
-            />
-            <img
-              data-testid={item.testid}
-              src={item.src}
-              alt={item.alt}
-              style={{
-                ...styles.image,
-                transform: 'rotateY(180deg)',
-                position: 'absolute',
-                top: '0px',
-                left: '-2px',
-              }}
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
+            >
+              <img
+                data-testid={`${item.testid}-card-back`}
+                src={cardBack}
+                alt={item.alt}
+                style={styles.cardBack}
+              />
+              <img
+                data-testid={item.testid}
+                src={item.src}
+                alt={item.alt}
+                style={styles.cardFront}
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </Box>
+      <svg style={styles.wave} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#D0AD96" fillOpacity="1" d="M0,32L120,32C240,32,480,32,720,37.3C960,43,1200,53,1320,58.7L1440,64L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z" /></svg>
       {success && (
         <SuccessModal
           handleClose={handleClose}

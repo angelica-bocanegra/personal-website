@@ -26,15 +26,15 @@ const SuccessModal = ({
       left: '50%',
       background: '#FFF3EB',
       transform: 'translate(-50%, -50%)',
-      padding: '12px',
+      padding: '16px',
       textAlign: 'center',
     },
     image: {
       borderRadius: '100%',
-      width: '24px',
-      padding: '8px',
+      width: '40px',
+      padding: '4px',
       marginRight: 'auto',
-      backgroundColor: '#20221C',
+      backgroundColor: '#676751',
     },
     icon: {
       position: 'absolute',
@@ -61,13 +61,9 @@ const SuccessModal = ({
           alt={variant.alt}
           style={styles.image}
         />
-        <Typography sx={{ mt: 2 }}>
-          {variant.title}
-        </Typography>
-        <Typography sx={{ mt: 2 }}>
-          {variant.body}
-        </Typography>
-        <Link href={variant.link} sx={{ mt: 2 }} target="_blank">
+        <Typography variant="h6">{variant.title}</Typography>
+        <Typography>{variant.body}</Typography>
+        <Link href={variant.link.includes('@') ? `mailto:${variant.link}` : variant.link} sx={{ m: 2 }} target="_blank">
           {variant.link}
         </Link>
       </Box>

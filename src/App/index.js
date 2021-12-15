@@ -9,14 +9,16 @@ import MemoryGame from './MemoryGame';
 import Footer from './Footer';
 
 const App = (): React.Node => (
-  <Box>
-    <Typography
-      variant="h1"
-      align="center"
-    >
-      Hello... my name is Angelica
-    </Typography>
-    <MemoryGame />
+  <Box sx={{ position: 'relative', minHeight: '100vh' }}>
+    <Box style={{ paddingBottom: '100px' }}>
+      <Typography
+        variant="h1"
+        align="center"
+      >
+        {'Hello, I\'m Angelica'}
+      </Typography>
+      <MemoryGame />
+    </Box>
     <Footer />
   </Box>
 );
