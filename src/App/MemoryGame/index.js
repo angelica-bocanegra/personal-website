@@ -61,7 +61,6 @@ const MemoryGame = (): React.Node => {
     if (cardSelection.length >= 2) {
       if (cardSelection[0].src === cardSelection[1].src) {
         setSuccess(cardSelection[0]);
-        // if the array's alt matches the other one then open modal
       } else {
         setTimeout(() => {
           setCardSelection([]);
