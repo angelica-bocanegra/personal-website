@@ -30,7 +30,7 @@ const MemoryGame = (): React.Node => {
       display: 'flex',
     },
     listItem: {
-      transition: 'transform 0.6s',
+      transition: 'transform 0.5s',
       transformStyle: 'preserve-3d',
       cursor: 'pointer',
       display: 'relative',
@@ -64,7 +64,7 @@ const MemoryGame = (): React.Node => {
       } else {
         setTimeout(() => {
           setCardSelection([]);
-        }, 1500);
+        }, 1000);
       }
     }
   }, [cardSelection]);
